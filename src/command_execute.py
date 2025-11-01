@@ -925,19 +925,22 @@ class CommandExecutor:
             print("Unexpected exception appeared")
 
     @staticmethod
-    def remove_last_line(file: str) -> None:
-        ''' Removes last unempty line from a file
-            Args:
-                filename: what file to process '''
-        with open(file, "r", encoding="utf-8") as f:
+    def remove_last_command_from_history(command_name: str) -> None:
+        '''Removes the last occurrence of specified command from history file'''
+        history_file = str(HISTORY_PATH)
+
+        with open(history_file, "r", encoding="utf-8") as f:
             lines = f.readlines()
-        if lines:
-            for i in range(len(lines)-1, -1, -1):
-                if lines[i].strip():
-                    lines.pop(i)
-                    break
-            with open(file, "w", encoding="utf-8") as f:
-                f.writelines(lines)
+
+        if not lines:
+            return
+        for i in range(len(lines)-1, -1, -1):
+            line = lines[i].strip()
+            if line.startswith(command_name + " ") or line == command_name:
+                lines.pop(i)
+                break
+        with open(history_file, "w", encoding="utf-8") as f:
+            f.writelines(lines)
 
     def execute_undo(self, options: list[str], args: list[str]) -> None:
         ''' Executes undo command (revert last rm/mv/cp/touch/cd command)
@@ -1026,8 +1029,8 @@ class CommandExecutor:
                     print("Unexpected exception appeared", e)
             if stack_unit ==[]:
                 self.command_stack.pop()
-                self.remove_last_line(str(HISTORY_PATH))
-                self.remove_last_line(str(HISTORY_PATH))
+                self.remove_last_command_from_history('undo')
+                self.remove_last_command_from_history(command)
         except ShellSyntaxError as e:
             self.logger.info("ERROR: undo failed - ShellSyntaxError")
             print(f"ShellSyntaxError: {e}")
