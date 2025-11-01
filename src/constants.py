@@ -48,6 +48,6 @@ HELP_MESSAGES = {
     "tar": "tar <source> <archive.tar> - create TAR archive",
     "untar": "untar <archive.tar> - extract TAR archive",
     "grep": "grep <pattern> <path> - search text in files\n  -r: recursive search\n  -i: ignore case",
-    "history": "history <N> (optional) - show command history (last N commands)",
+    "history": "history <N> (optional) - show command history (last N commands)\n  -c: clear history",
     "undo": "undo - revert last cp/mv/rm/touch/cd operation",
 }
