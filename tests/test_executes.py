@@ -117,6 +117,30 @@ class TestExecutes(TestCase):
         self.assertIn('third line', output)
         self.assertNotIn('first line', output)
 
+        self.fs.create_file('grep_regex.txt', contents=
+        'test123\n'
+        'abc_123_xyz\n'
+        'email@example.com\n'
+        'simple text\n'
+        'ABC-123-XYZ\n'
+        'user.name@domain.co.uk')
+
+        # Поиск email адресов
+        output = self.capture_output(lambda:
+            self.shell.executor.execute_grep([], [r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', 'grep_regex.txt']))
+        self.assertIn('email@example.com', output)
+        self.assertIn('user.name@domain.co.uk', output)
+        self.assertNotIn('test123', output)
+        self.assertNotIn('simple text', output)
+
+        # Поиск шаблонов с цифрами и символами
+        output = self.capture_output(lambda:
+            self.shell.executor.execute_grep(['-i'], [r'[a-z]+[-_][0-9]+[-_][a-z]+', 'grep_regex.txt']))
+        self.assertIn('abc_123_xyz', output)
+        self.assertIn('ABC-123-XYZ', output)
+        self.assertNotIn('test123', output)
+        self.assertNotIn('email@example.com', output)
+
     def test_undo_rm(self):
         '''Тест отмены удаления'''
         self.fs.create_file('undo_test.txt', contents='important data')

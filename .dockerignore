@@ -1,0 +1,55 @@
+
+# Файлы Python
+__pycache__/
+src/__pycache__/
+tests/__pycache__/
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+uv.lock
+venv/
+
+# Файлы разработки и IDE
+.git/
+.gitignore
+Dockerfile
+.dockerignore
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
+
+# Докер
+docker-compose.yml
+.docker/
+
+# Временные файлы
+*.tmp
+*.temp
+.history
+.trash
+.mv_backup
+.cp_backup
+.pre-commit-config.yaml
+.ruff_cache
+shell.log
+.pytest_cache
+.mypy_cache
+pyproject.toml

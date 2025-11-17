@@ -96,9 +96,9 @@ class CommandExecutor:
         except ShellSyntaxError as e:
             self.logger.info("ERROR: touch failed - ShellSyntaxError")
             print(f"ShellSyntaxError: {e}")
-        except Exception:
+        except Exception as e:
             self.logger.info("ERROR: touch failed - Unexpected exception")
-            print("Unexpected exception appeared")
+            print(f"Unexpected exception appeared {e}")
 
     @staticmethod
     def mode_to_str(perm: int) -> str:
@@ -150,7 +150,7 @@ class CommandExecutor:
                     file_stat = os.stat(full_file_name)
                     if len(file_name) > 30:
                         file_name = file_name[:30] + "..."
-                    line = f"{file_name:<33} {file_stat.st_size:>15} {(datetime.datetime.fromtimestamp(file_stat.st_mtime)).strftime("%Y-%m-%d %H:%M"):>16} {self.mode_to_str((file_stat.st_mode)):>10}"
+                    line = f"{file_name:<33} {file_stat.st_size:>15} {(datetime.datetime.fromtimestamp(file_stat.st_mtime)).strftime('%Y-%m-%d %H:%M'):>16} {self.mode_to_str((file_stat.st_mode)):>10}"
                     print(line)
             else:
                 res = os.listdir(dir_name)
@@ -847,7 +847,7 @@ class CommandExecutor:
                         file_path = os.path.join(root, file)
                         matches = self.find_re_matches_in_file(file_path, pattern, flags)
                         for line_num, line in matches:
-                            print(f"File: {file_path}:{line_num}\nMatch: {line}\n")
+                            print(f"File: {file_path}: {line_num}\nMatch: {line}\n")
             else:
                 if os.path.isfile(path):
                     matches = self.find_re_matches_in_file(path, pattern, flags)
