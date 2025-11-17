@@ -22,5 +22,11 @@
    ```
 3)	Multi-arch сборка (amd64, arm64):
    ```
+   docker buildx create --name multiarch-builder --use
+   ```
+   ```
+   docker buildx inspect --bootstrap
+   ```
+   ```
    docker buildx build --platform linux/amd64,linux/arm64 -t vladislave008/bash-simulator:latest -t vladislave008/bash-simulator:1.0.0 --push .
    ```
