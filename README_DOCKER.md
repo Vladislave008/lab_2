@@ -1,6 +1,8 @@
 ## Инструкции для запуска образа:
 1) Без дополнительных параметров
-    - docker run -it --rm vladislave008/bash-simulator:latest
+   ```
+   docker run -it --rm vladislave008/bash-simulator:latest
+   ```
 2)	С blind-mount для hot-reload (актуально для разработчиков)
     - docker run -it --rm -v ${PWD}:/app vladislave008/bash-simulator:latest
 3)	Для проверки HEALTHCHECK
